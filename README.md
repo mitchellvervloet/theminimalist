@@ -1,0 +1,2 @@
+# theminimalist
+A minimalistic game.
