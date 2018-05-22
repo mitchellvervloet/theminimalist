@@ -13,7 +13,8 @@
 - ..
 
 ## Pull request
-- link naar een pull request in een fork van het project van een medestudent
+- link naar een pull request in een fork van het project van een medestudent: 
+- https://github.com/duncanteege/DrugDealer/tree/duncanbranch
 
 ## Peer review
 - link naar peer review in week 6
