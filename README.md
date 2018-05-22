@@ -15,6 +15,9 @@
 ## Pull request
 - link naar een pull request in een fork van het project van een medestudent
 
+## Peer review
+- link naar peer review in week 6
+
 ## Singleton
 - ..
 
