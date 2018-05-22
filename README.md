@@ -1,16 +1,31 @@
-# The Minimalist
+# The Minimalist (Crash Bandicoot Edition)
 
-Een game voor de herkansingen van PRG01-8 ofwel Applying Design Patterns in Game Development. 
+## Inleiding
+- Een game voor de herkansingen van PRG01-8 ofwel Applying Design Patterns in Game Development. 
 
-## Het project
+## Speelbare game
+- link
 
-- De **docs** map bevat de client side:html en css. De js file wordt hier automatisch in gezet door de compiler.
-- De **dev** map bevat de typescript files.
-- **game.ts** is het startpunt van de app. Hierin staat de window listener die een `new Game()` maakt.
+## Installatie
+- ..
 
-## Compileren
-- Druk op CMD+SHIFT+B en kies voor `watch mode`. Je `.ts` files worden nu samengevoegd in `main.js`.
-- tsconfig.json bevat instellingen voor het compileren.
+## Klassendiagram
+- ..
 
-## Bekijken
-Open index.html in `localhost`
+## Pull request
+- link naar een pull request in een fork van het project van een medestudent
+
+## Singleton
+- ..
+
+## Polymorfisme
+- ..
+
+## Strategy
+- ..
+
+## Observer
+- ..
+
+## Gameplay componenten
+- Beschrijf per compenent waar en waarom je het hebt toegepast:
