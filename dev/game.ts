@@ -4,8 +4,7 @@ class Game {
 
     private square: Square
 
-
-    constructor(){
+    constructor() {
         let container = document.getElementById("container")!
         this.square = new Square(container)
 
@@ -21,7 +20,7 @@ class Game {
     }
 
     //Game loop that runs 60fps, or as fast as the device can handle when it's less than 60
-    private gameLoop(){
+    private gameLoop() {
         this.square.update()
         requestAnimationFrame(() => this.gameLoop())
     }

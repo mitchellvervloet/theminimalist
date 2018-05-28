@@ -39,7 +39,6 @@ var GameObject = (function () {
         parent.appendChild(this.div);
     }
     GameObject.prototype.update = function () {
-        console.log("Draw the objects here and transform");
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
     return GameObject;
@@ -52,16 +51,12 @@ var Square = (function (_super) {
         _this.height = 60;
         _this.x = Math.random() * (window.innerWidth - _this.width);
         _this.y = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 2 - _this.height);
-        _this.behaviour = new speedUp(_this);
+        _this.behaviour = new slowDown(_this);
         _this.speed = 1;
         return _this;
     }
     Square.prototype.update = function () {
-        console.log("Hi, I'm a square.");
         this.behaviour.performBehaviour();
-        this.behaviour.onSpeedUp();
-        this.behaviour.onSlowDown();
-        console.log("speed is: " + this.speed);
         _super.prototype.update.call(this);
     };
     return Square;
@@ -82,7 +77,7 @@ var slowDown = (function () {
         this.square = square;
     }
     slowDown.prototype.performBehaviour = function () {
-        console.log("check for changes behaviour");
+        this.onSlowDown();
     };
     slowDown.prototype.onSpeedUp = function () {
         console.log("Not in this behaviour");
@@ -97,7 +92,7 @@ var speedUp = (function () {
         this.square = square;
     }
     speedUp.prototype.performBehaviour = function () {
-        console.log("check for changes behaviour");
+        this.onSpeedUp();
     };
     speedUp.prototype.onSpeedUp = function () {
         console.log("Speed up");

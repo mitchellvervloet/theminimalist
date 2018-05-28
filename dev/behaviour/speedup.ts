@@ -9,7 +9,7 @@ class speedUp implements Behaviour {
     }
 
     performBehaviour(): void {
-        console.log("check for changes behaviour")
+        this.onSpeedUp()
     }
 
     onSpeedUp(): void {

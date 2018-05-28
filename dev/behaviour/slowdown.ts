@@ -9,7 +9,7 @@ class slowDown implements Behaviour {
     }
 
     performBehaviour(): void {
-        console.log("check for changes behaviour")
+        this.onSlowDown()
     }
 
     onSpeedUp(): void {

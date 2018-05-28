@@ -15,6 +15,9 @@
 ## Pull request
 - link naar een pull request in een fork van het project van een medestudent: 
 - https://github.com/duncanteege/DrugDealer/tree/duncanbranch
+- Waarom ik de dingen heb toegevoegd:
+- Strategy behaviour:
+- Singleton van Game:
 
 ## Peer review
 - link naar peer review in week 6
