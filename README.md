@@ -15,6 +15,8 @@
 ## Pull request
 - link naar een pull request in een fork van het project van een medestudent: 
 - https://github.com/duncanteege/DrugDealer/tree/duncanbranch
+- Mijn code aanpassingen van Mitchell zijn project staan onderin de readme (aanpassingen gemaakt op 22 mei 2018)
+
 - Waarom ik de dingen heb toegevoegd:
 - Strategy behaviour:
 - Singleton van Game:
@@ -36,3 +38,13 @@
 
 ## Gameplay componenten
 - Beschrijf per compenent waar en waarom je het hebt toegepast:
+
+
+
+
+## Code
+- # mijnproject
+-
+- testcomment
++ # mijnproject - Fork Duncan
++ - testcomment
