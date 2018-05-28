@@ -1,5 +1,4 @@
 class Util {
-
     /**
      * deze formule rekent uit of twee gameobjecten elkaar overlappen
      */
