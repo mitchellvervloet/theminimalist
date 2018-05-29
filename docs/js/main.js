@@ -1,14 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var Game = (function () {
     function Game() {
         this.square = new Square();
@@ -39,27 +29,48 @@ var GameObject = (function () {
     };
     return GameObject;
 }());
-var Square = (function (_super) {
-    __extends(Square, _super);
+var Square = (function () {
     function Square() {
-        var _this = _super.call(this) || this;
-        _this.element = document.createElement("square");
+        var _this = this;
+        this.speedLeft = 0;
+        this.speedRight = 0;
+        this.element = document.createElement("square");
         var foreground = document.getElementsByTagName("foreground")[0];
-        foreground.appendChild(_this.element);
-        _this.speed = 4 + Math.random() * 8;
-        _this.y = 500;
-        _this.x = Math.random() * 450;
-        return _this;
+        foreground.appendChild(this.element);
+        this.y = 500;
+        this.x = 100;
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+        window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
     }
     Square.prototype.update = function () {
-        this.x += this.speed;
+        this.x = this.x + this.speedRight - this.speedLeft;
         this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
     Square.prototype.getBounds = function () {
         return this.element.getBoundingClientRect();
     };
+    Square.prototype.onKeyDown = function (event) {
+        switch (event.key) {
+            case "ArrowLeft":
+                this.speedLeft = 10;
+                break;
+            case "ArrowRight":
+                this.speedRight = 10;
+                break;
+        }
+    };
+    Square.prototype.onKeyUp = function (event) {
+        switch (event.key) {
+            case "ArrowLeft":
+                this.speedLeft = 0;
+                break;
+            case "ArrowRight":
+                this.speedRight = 0;
+                break;
+        }
+    };
     return Square;
-}(GameObject));
+}());
 var Util = (function () {
     function Util() {
     }
