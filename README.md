@@ -20,8 +20,8 @@
 
 
 - Waarom ik de dingen heb toegevoegd:
-- Strategy behaviour:
-- Singleton van Game:
+- Strategy behaviour: Ik heb strategy pattern toegepast op Mitchell zijn code omdat hierdoor zijn code netter is en het gemakkelijk verder uit te breiden is in te toekomst.
+- Singleton van Game: Zodat er maar 1 Game instance is.
 
 ## Peer review
 - link naar peer review in week 6
