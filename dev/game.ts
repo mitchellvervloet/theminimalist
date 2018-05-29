@@ -1,12 +1,10 @@
 class Game {
 
     public static instance: Game
-
     private square: Square
-
+    
     constructor() {
-        let container = document.getElementById("container")!
-        this.square = new Square(container)
+        this.square = new Square()
 
         this.gameLoop()
     }

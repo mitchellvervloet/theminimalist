@@ -1,27 +1,26 @@
 class Square extends GameObject {
 
-    public behaviour: Behaviour
-    public speed: number
-
-    constructor(parent: HTMLElement) {
-
-        super("square", parent);
-        this.width = 60;
-        this.height = 60;
-        this.x = Math.random() * (window.innerWidth - this.width);
-        this.y = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 2 - this.height);
-
-        this.behaviour = new slowDown(this)
-        this.speed = 1
-
+    private element: HTMLElement
+    private speed:number
+    private x:number
+    private y:number
+        
+    constructor() {
+        super()
+        this.element = document.createElement("square")
+        let foreground = document.getElementsByTagName("foreground")[0]
+        foreground.appendChild(this.element);
+        this.speed = 4 + Math.random() * 8
+        this.x = Math.random() * (window.innerWidth - 200)
+        this.y = -400 - (Math.random() * 450) 
     }
 
-    update() {
-        this.behaviour.performBehaviour()
+    public update():void {
+        this.y += this.speed
+        this.element.style.transform = `translate(${this.x}px, ${this.y}px)`
+    }
 
-        // console.log("speed is: " + this.speed)
-
-        super.update()
-
+    public getBounds() {
+        return this.element.getBoundingClientRect()
     }
 }

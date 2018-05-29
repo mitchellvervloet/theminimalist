@@ -11,8 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Game = (function () {
     function Game() {
-        var container = document.getElementById("container");
-        this.square = new Square(container);
+        this.square = new Square();
         this.gameLoop();
     }
     Game.getInstance = function () {
@@ -32,32 +31,30 @@ window.addEventListener("load", function () {
     Game.getInstance();
 });
 var GameObject = (function () {
-    function GameObject(tag, parent) {
-        this.x = 0;
-        this.y = 0;
-        this.div = document.createElement(tag);
-        parent.appendChild(this.div);
+    function GameObject() {
     }
     GameObject.prototype.update = function () {
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
     return GameObject;
 }());
 var Square = (function (_super) {
     __extends(Square, _super);
-    function Square(parent) {
-        var _this = _super.call(this, "square", parent) || this;
-        _this.width = 60;
-        _this.height = 60;
-        _this.x = Math.random() * (window.innerWidth - _this.width);
-        _this.y = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 2 - _this.height);
-        _this.behaviour = new slowDown(_this);
-        _this.speed = 1;
+    function Square() {
+        var _this = _super.call(this) || this;
+        _this.element = document.createElement("square");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.element);
+        _this.speed = 4 + Math.random() * 8;
+        _this.x = Math.random() * (window.innerWidth - 200);
+        _this.y = -400 - (Math.random() * 450);
         return _this;
     }
     Square.prototype.update = function () {
-        this.behaviour.performBehaviour();
-        _super.prototype.update.call(this);
+        this.y += this.speed;
+        this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
+    Square.prototype.getBounds = function () {
+        return this.element.getBoundingClientRect();
     };
     return Square;
 }(GameObject));
