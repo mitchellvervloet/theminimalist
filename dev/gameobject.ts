@@ -1,8 +1,8 @@
 class GameObject {
 
     public div: HTMLElement;
-    protected x: number = 0;
-    protected y: number = 0;
+    public x: number = 0;
+    public y: number = 0;
     public width: number;
     public height: number;
 
