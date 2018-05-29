@@ -32,6 +32,8 @@ window.addEventListener("load", function () {
 });
 var GameObject = (function () {
     function GameObject() {
+        this.x = 0;
+        this.y = 0;
     }
     GameObject.prototype.update = function () {
     };
@@ -45,12 +47,12 @@ var Square = (function (_super) {
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
         _this.speed = 4 + Math.random() * 8;
-        _this.x = Math.random() * (window.innerWidth - 200);
-        _this.y = -400 - (Math.random() * 450);
+        _this.y = 500;
+        _this.x = Math.random() * 450;
         return _this;
     }
     Square.prototype.update = function () {
-        this.y += this.speed;
+        this.x += this.speed;
         this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
     Square.prototype.getBounds = function () {
