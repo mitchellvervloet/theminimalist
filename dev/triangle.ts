@@ -13,7 +13,8 @@ class Triangle extends GameObject {
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element);
 
-        this.speed = 7
+        //Random speed between 3 and 10?
+        this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
 
         this.positionX = window.innerWidth
         this.positionY = Math.random() * (window.innerHeight - this.height)

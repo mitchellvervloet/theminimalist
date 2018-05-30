@@ -182,7 +182,7 @@ var Triangle = (function (_super) {
         _this.element = document.createElement("triangle");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
-        _this.speed = 7;
+        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
         _this.positionX = window.innerWidth;
         _this.positionY = Math.random() * (window.innerHeight - _this.height);
         return _this;
