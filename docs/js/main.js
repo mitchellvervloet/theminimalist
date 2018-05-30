@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 var Game = (function () {
     function Game() {
         this.gameObjects = [];
-        this.gameObjects.push(new Triangle);
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle);
         this.square = new Square();
         this.gameLoop();
     }
@@ -142,20 +142,28 @@ var Triangle = (function (_super) {
     function Triangle() {
         var _this = _super.call(this) || this;
         _this.width = 60;
-        _this.height = 6;
+        _this.height = 60;
         _this.element = document.createElement("triangle");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
+        _this.speed = 7;
         _this.positionX = window.innerWidth;
-        _this.positionY = 200;
+        _this.positionY = Math.random() * (window.innerHeight - _this.height);
         return _this;
     }
     Triangle.prototype.update = function () {
-        this.positionX = this.positionX - 2;
+        this.positionX = this.positionX - this.speed;
+        if ((this.positionX + this.width) < 0) {
+            this.reset();
+        }
         this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
     };
     Triangle.prototype.getBounds = function () {
         return this.element.getBoundingClientRect();
+    };
+    Triangle.prototype.reset = function () {
+        this.positionX = window.innerWidth;
+        this.positionY = Math.random() * (window.innerHeight - this.height);
     };
     return Triangle;
 }(GameObject));

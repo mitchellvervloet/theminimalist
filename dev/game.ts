@@ -5,7 +5,7 @@ class Game {
     public square: Square
 
     constructor() {
-        this.gameObjects.push(new Triangle)
+        this.gameObjects.push(new Triangle,new Triangle,new Triangle)
         this.square = new Square()
 
         this.gameLoop()
