@@ -1,4 +1,4 @@
-# The Minimalist (Crash Bandicoot Edition)
+# The Minimalist
 
 ## Inleiding
 - Een game voor de herkansingen van PRG01-8 ofwel Applying Design Patterns in Game Development. 
