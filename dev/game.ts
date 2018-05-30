@@ -8,7 +8,7 @@ class Game {
     public score: number = 0
 
     constructor() {
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle)
+        this.gameObjects.push(new Triangle,new Triangle,new Triangle, new UI(this))
         this.square = new Square()
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
@@ -33,7 +33,6 @@ class Game {
             if (!this.paused) {
                 this.score++
             }
-            console.log("score = " + this.score)
         }, 1000)
     }
 
@@ -64,7 +63,14 @@ class Game {
                 this.paused = true
                 console.log("game over")
             }
+        } else {
+            for (let o of this.gameObjects) {
+                if (o instanceof UI) {
+                    o.gamePause(this.paused)
+                }
+            }
         }
+
         requestAnimationFrame(() => this.gameLoop())
     }
 }

@@ -16,7 +16,7 @@ var Game = (function () {
         this.lives = 3;
         this.paused = false;
         this.score = 0;
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle);
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new UI(this));
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         this.scoreUp();
@@ -40,7 +40,6 @@ var Game = (function () {
             if (!_this.paused) {
                 _this.score++;
             }
-            console.log("score = " + _this.score);
         }, 1000);
     };
     Game.getInstance = function () {
@@ -68,6 +67,14 @@ var Game = (function () {
             else {
                 this.paused = true;
                 console.log("game over");
+            }
+        }
+        else {
+            for (var _b = 0, _c = this.gameObjects; _b < _c.length; _b++) {
+                var o = _c[_b];
+                if (o instanceof UI) {
+                    o.gamePause(this.paused);
+                }
             }
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -202,6 +209,32 @@ var Triangle = (function (_super) {
         this.positionY = Math.random() * (window.innerHeight - this.height);
     };
     return Triangle;
+}(GameObject));
+var UI = (function (_super) {
+    __extends(UI, _super);
+    function UI(g) {
+        var _this = _super.call(this) || this;
+        _this.game = g;
+        _this.score = document.createElement("score");
+        _this.paused = document.createElement("paused");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.score);
+        foreground.appendChild(_this.paused);
+        return _this;
+    }
+    UI.prototype.update = function () {
+        this.score.innerHTML = "Score: " + this.game.score;
+    };
+    UI.prototype.gamePause = function (pause) {
+        if (pause) {
+            console.log(pause);
+            this.paused.innerHTML = "The game is paused. Press 'Escape' to unpause.";
+        }
+        else {
+            this.paused.innerHTML = "";
+        }
+    };
+    return UI;
 }(GameObject));
 var Util = (function () {
     function Util() {
