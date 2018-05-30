@@ -11,11 +11,26 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Game = (function () {
     function Game() {
+        var _this = this;
         this.gameObjects = [];
+        this.paused = false;
         this.gameObjects.push(new Triangle, new Triangle, new Triangle);
         this.square = new Square();
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         this.gameLoop();
     }
+    Game.prototype.onKeyDown = function (event) {
+        switch (event.key) {
+            case "Escape":
+                if (this.paused) {
+                    this.paused = false;
+                }
+                else {
+                    this.paused = true;
+                }
+                break;
+        }
+    };
     Game.getInstance = function () {
         if (!Game.instance) {
             Game.instance = new Game();
@@ -24,13 +39,16 @@ var Game = (function () {
     };
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.square.update();
-        for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
-            var o = _a[_i];
-            o.update();
-            if (o instanceof Triangle) {
-                if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                    console.log("collision detected!");
+        console.log(this.paused);
+        if (!this.paused) {
+            this.square.update();
+            for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
+                var o = _a[_i];
+                o.update();
+                if (o instanceof Triangle) {
+                    if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                        console.log("collision detected!");
+                    }
                 }
             }
         }

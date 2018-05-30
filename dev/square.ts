@@ -21,7 +21,6 @@ class Square  {
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
         window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
-
     }
 
     public update(): void {
