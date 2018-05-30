@@ -62,8 +62,6 @@ var Square = (function (_super) {
         this.positionX = this.positionX + this.speedRight - this.speedLeft;
         this.velocityY += this.gravity;
         this.positionY += this.velocityY;
-        console.log("y pos              " + this.positionY);
-        console.log("window innerheight    " + (window.innerHeight - 60));
         if (this.positionY > (window.innerHeight - 60)) {
             this.positionY = window.innerHeight - 60;
             this.velocityY = 0.0;
@@ -72,15 +70,15 @@ var Square = (function (_super) {
         this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
     };
     Square.prototype.startJump = function () {
-        console.log('clicked up key to jump!');
         if (this.onTheGround) {
             this.velocityY = -30.0;
             this.onTheGround = false;
         }
     };
     Square.prototype.endJump = function () {
-        console.log('released up key!');
-        this.velocityY = -12.0;
+        if (this.velocityY < -6.0) {
+            this.velocityY = -6.0;
+        }
     };
     Square.prototype.getBounds = function () {
         return this.element.getBoundingClientRect();

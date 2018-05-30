@@ -30,8 +30,8 @@ class Square extends GameObject {
         //Y - Axis
         this.velocityY += this.gravity;
         this.positionY += this.velocityY;
-        console.log("y pos              " + this.positionY)
-        console.log("window innerheight    " + (window.innerHeight - 60))
+        // console.log("y pos                " + this.positionY)
+        // console.log("window innerheight    " + (window.innerHeight - 60 + 0.5))
 
         if (this.positionY > (window.innerHeight - 60)) {
             this.positionY = window.innerHeight - 60;
@@ -39,26 +39,21 @@ class Square extends GameObject {
             this.onTheGround = true;
         }
 
+
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }
 
     public startJump() {
-        console.log('clicked up key to jump!')
-        //Only start jump when 
         if (this.onTheGround) {
             this.velocityY = -30.0
             this.onTheGround = false
         }
     }
     public endJump() {
-        console.log('released up key!')
-
         //Different sized height jump
-        // if (this.velocityY < -6.0) {
-        //     this.velocityY = -6.0
-        // }
-
-        this.velocityY = -12.0
+        if (this.velocityY < -6.0) {
+            this.velocityY = -6.0
+        }
     }
     public getBounds() {
         return this.element.getBoundingClientRect()
@@ -73,6 +68,7 @@ class Square extends GameObject {
                 this.speedRight = 10
                 break
             case "ArrowUp":
+            //Only jump when square is on the ground
                 if (this.onTheGround) {
                     this.startJump()
                 }
