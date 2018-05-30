@@ -33,10 +33,23 @@ class Square extends GameObject {
         // console.log("y pos                " + this.positionY)
         // console.log("window innerheight    " + (window.innerHeight - 60 + 0.5))
 
+        if (this.positionX < 0) {
+            this.positionX = 0
+        }
+        if ((+this.positionX + +60) > window.innerWidth) {
+            this.positionX = (window.innerWidth - 60)
+            console.log('outside of screen')
+        }
+
         if (this.positionY > (window.innerHeight - 60)) {
-            this.positionY = window.innerHeight - 60;
-            this.velocityY = 0.0;
-            this.onTheGround = true;
+            this.positionY = window.innerHeight - 60
+            this.velocityY = 0.0
+            this.onTheGround = true
+        }
+        if (this.positionY < 0) {
+            //reached top of screen, dont leave us now! ;)
+            this.positionY = 0
+            this.velocityY = 0.0
         }
 
 

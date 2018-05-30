@@ -62,10 +62,21 @@ var Square = (function (_super) {
         this.positionX = this.positionX + this.speedRight - this.speedLeft;
         this.velocityY += this.gravity;
         this.positionY += this.velocityY;
+        if (this.positionX < 0) {
+            this.positionX = 0;
+        }
+        if ((+this.positionX + +60) > window.innerWidth) {
+            this.positionX = (window.innerWidth - 60);
+            console.log('outside of screen');
+        }
         if (this.positionY > (window.innerHeight - 60)) {
             this.positionY = window.innerHeight - 60;
             this.velocityY = 0.0;
             this.onTheGround = true;
+        }
+        if (this.positionY < 0) {
+            this.positionY = 0;
+            this.velocityY = 0.0;
         }
         this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
     };
