@@ -45,18 +45,42 @@ var Square = (function (_super) {
         var _this = _super.call(this) || this;
         _this.speedLeft = 0;
         _this.speedRight = 0;
+        _this.velocityX = 4;
+        _this.velocityY = 0;
+        _this.gravity = 0.5;
+        _this.onTheGround = false;
         _this.element = document.createElement("square");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
-        _this.y = window.innerHeight - 60;
-        _this.x = 0;
+        _this.positionY = window.innerHeight - 60;
+        _this.positionX = 0;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
         return _this;
     }
     Square.prototype.update = function () {
-        this.x = this.x + this.speedRight - this.speedLeft;
-        this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+        this.positionX = this.positionX + this.speedRight - this.speedLeft;
+        this.velocityY += this.gravity;
+        this.positionY += this.velocityY;
+        console.log("y pos              " + this.positionY);
+        console.log("window innerheight    " + (window.innerHeight - 60));
+        if (this.positionY > (window.innerHeight - 60)) {
+            this.positionY = window.innerHeight - 60;
+            this.velocityY = 0.0;
+            this.onTheGround = true;
+        }
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    Square.prototype.startJump = function () {
+        console.log('clicked up key to jump!');
+        if (this.onTheGround) {
+            this.velocityY = -30.0;
+            this.onTheGround = false;
+        }
+    };
+    Square.prototype.endJump = function () {
+        console.log('released up key!');
+        this.velocityY = -12.0;
     };
     Square.prototype.getBounds = function () {
         return this.element.getBoundingClientRect();
@@ -70,7 +94,10 @@ var Square = (function (_super) {
                 this.speedRight = 10;
                 break;
             case "ArrowUp":
-                console.log('jump!');
+                if (this.onTheGround) {
+                    this.startJump();
+                }
+                break;
         }
     };
     Square.prototype.onKeyUp = function (event) {
@@ -80,6 +107,9 @@ var Square = (function (_super) {
                 break;
             case "ArrowRight":
                 this.speedRight = 0;
+                break;
+            case "ArrowUp":
+                this.endJump();
                 break;
         }
     };
