@@ -13,10 +13,13 @@ var Game = (function () {
     function Game() {
         var _this = this;
         this.gameObjects = [];
+        this.lives = 3;
         this.paused = false;
+        this.score = 0;
         this.gameObjects.push(new Triangle, new Triangle, new Triangle);
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+        this.scoreUp();
         this.gameLoop();
     }
     Game.prototype.onKeyDown = function (event) {
@@ -31,6 +34,15 @@ var Game = (function () {
                 break;
         }
     };
+    Game.prototype.scoreUp = function () {
+        var _this = this;
+        setInterval(function () {
+            if (!_this.paused) {
+                _this.score++;
+            }
+            console.log("score = " + _this.score);
+        }, 1000);
+    };
     Game.getInstance = function () {
         if (!Game.instance) {
             Game.instance = new Game();
@@ -39,17 +51,23 @@ var Game = (function () {
     };
     Game.prototype.gameLoop = function () {
         var _this = this;
-        console.log(this.paused);
         if (!this.paused) {
-            this.square.update();
-            for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
-                var o = _a[_i];
-                o.update();
-                if (o instanceof Triangle) {
-                    if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                        console.log("collision detected!");
+            if (this.lives > 0) {
+                this.square.update();
+                for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
+                    var o = _a[_i];
+                    o.update();
+                    if (o instanceof Triangle) {
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                            o.reset();
+                            this.lives--;
+                        }
                     }
                 }
+            }
+            else {
+                this.paused = true;
+                console.log("game over");
             }
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -159,8 +177,8 @@ var Triangle = (function (_super) {
     __extends(Triangle, _super);
     function Triangle() {
         var _this = _super.call(this) || this;
-        _this.width = 60;
-        _this.height = 60;
+        _this.width = 50;
+        _this.height = 50;
         _this.element = document.createElement("triangle");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);

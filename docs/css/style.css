@@ -40,8 +40,8 @@ square {
 }
 
 triangle {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     position: absolute;
     border-top: 30px solid transparent;
     border-right: 50px solid red;
