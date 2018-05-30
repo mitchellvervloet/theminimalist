@@ -12,7 +12,8 @@ var __extends = (this && this.__extends) || (function () {
 var Game = (function () {
     function Game() {
         this.gameObjects = [];
-        this.gameObjects.push(new Square, new Triangle);
+        this.gameObjects.push(new Triangle);
+        this.square = new Square();
         this.gameLoop();
     }
     Game.getInstance = function () {
@@ -23,9 +24,15 @@ var Game = (function () {
     };
     Game.prototype.gameLoop = function () {
         var _this = this;
+        this.square.update();
         for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
             var o = _a[_i];
             o.update();
+            if (o instanceof Triangle) {
+                if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                    console.log("collision detected!");
+                }
+            }
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
@@ -43,26 +50,24 @@ var GameObject = (function () {
     };
     return GameObject;
 }());
-var Square = (function (_super) {
-    __extends(Square, _super);
+var Square = (function () {
     function Square() {
-        var _this = _super.call(this) || this;
-        _this.speedLeft = 0;
-        _this.speedRight = 0;
-        _this.velocityX = 4;
-        _this.velocityY = 0;
-        _this.gravity = 0.5;
-        _this.onTheGround = false;
-        _this.width = 60;
-        _this.height = 60;
-        _this.element = document.createElement("square");
+        var _this = this;
+        this.speedLeft = 0;
+        this.speedRight = 0;
+        this.velocityX = 4;
+        this.velocityY = 0;
+        this.gravity = 0.5;
+        this.onTheGround = false;
+        this.width = 60;
+        this.height = 60;
+        this.element = document.createElement("square");
         var foreground = document.getElementsByTagName("foreground")[0];
-        foreground.appendChild(_this.element);
-        _this.positionY = window.innerHeight - _this.height;
-        _this.positionX = 0;
+        foreground.appendChild(this.element);
+        this.positionY = window.innerHeight - this.height;
+        this.positionX = 0;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
-        return _this;
     }
     Square.prototype.update = function () {
         this.positionX = this.positionX + this.speedRight - this.speedLeft;
@@ -131,7 +136,7 @@ var Square = (function (_super) {
         }
     };
     return Square;
-}(GameObject));
+}());
 var Triangle = (function (_super) {
     __extends(Triangle, _super);
     function Triangle() {
@@ -157,11 +162,11 @@ var Triangle = (function (_super) {
 var Util = (function () {
     function Util() {
     }
-    Util.checkCollision = function (go1, go2) {
-        return (go1.x < go2.x + go2.width &&
-            go1.x + go1.width > go2.x &&
-            go1.y < go2.y + go2.height &&
-            go1.height + go1.y > go2.y);
+    Util.checkCollision = function (a, b) {
+        return (a.left <= b.right &&
+            b.left <= a.right &&
+            a.top <= b.bottom &&
+            b.top <= a.bottom);
     };
     return Util;
 }());

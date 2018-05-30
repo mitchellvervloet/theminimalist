@@ -1,4 +1,4 @@
-class Square extends GameObject {
+class Square  {
 
     private element: HTMLElement
     private speedLeft: number = 0
@@ -13,7 +13,6 @@ class Square extends GameObject {
     public height: number = 60
 
     constructor() {
-        super()
         this.element = document.createElement("square")
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element);

@@ -1,6 +1,6 @@
 class Triangle extends GameObject {
 
-    private element: HTMLElement
+    public element: HTMLElement
     public width: number = 60
     public height: number = 6
     // public speed: number

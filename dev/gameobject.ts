@@ -1,6 +1,6 @@
 class GameObject {
 
-    public div: HTMLElement;
+    public element: HTMLElement;
     public x: number = 0;
     public y: number = 0;
     public width: number;
