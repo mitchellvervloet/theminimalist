@@ -38,3 +38,12 @@ square {
     background-color: white;
     position: absolute
 }
+
+triangle {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+	border-top: 30px solid transparent;
+	border-right: 50px solid red;
+	border-bottom: 30px solid transparent;
+}

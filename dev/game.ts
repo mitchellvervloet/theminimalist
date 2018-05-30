@@ -1,10 +1,10 @@
 class Game {
 
     public static instance: Game
-    private square: Square
-    
+    public gameObjects: GameObject[] = []
+
     constructor() {
-        this.square = new Square()
+        this.gameObjects.push(new Square, new Triangle)
 
         this.gameLoop()
     }
@@ -19,7 +19,9 @@ class Game {
 
     //Game loop that runs 60fps, or as fast as the device can handle when it's less than 60
     private gameLoop() {
-        this.square.update()
+        for (let o of this.gameObjects) {
+            o.update()
+        }
         requestAnimationFrame(() => this.gameLoop())
     }
 }

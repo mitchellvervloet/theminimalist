@@ -11,7 +11,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Game = (function () {
     function Game() {
-        this.square = new Square();
+        this.gameObjects = [];
+        this.gameObjects.push(new Square, new Triangle);
         this.gameLoop();
     }
     Game.getInstance = function () {
@@ -22,7 +23,10 @@ var Game = (function () {
     };
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.square.update();
+        for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
+            var o = _a[_i];
+            o.update();
+        }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     return Game;
@@ -49,10 +53,12 @@ var Square = (function (_super) {
         _this.velocityY = 0;
         _this.gravity = 0.5;
         _this.onTheGround = false;
+        _this.width = 60;
+        _this.height = 60;
         _this.element = document.createElement("square");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
-        _this.positionY = window.innerHeight - 60;
+        _this.positionY = window.innerHeight - _this.height;
         _this.positionX = 0;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
@@ -62,15 +68,18 @@ var Square = (function (_super) {
         this.positionX = this.positionX + this.speedRight - this.speedLeft;
         this.velocityY += this.gravity;
         this.positionY += this.velocityY;
+        this.movement();
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    Square.prototype.movement = function () {
         if (this.positionX < 0) {
             this.positionX = 0;
         }
-        if ((+this.positionX + +60) > window.innerWidth) {
-            this.positionX = (window.innerWidth - 60);
-            console.log('outside of screen');
+        if ((this.positionX + this.width) > window.innerWidth) {
+            this.positionX = (window.innerWidth - this.width);
         }
-        if (this.positionY > (window.innerHeight - 60)) {
-            this.positionY = window.innerHeight - 60;
+        if (this.positionY > (window.innerHeight - this.height)) {
+            this.positionY = window.innerHeight - this.height;
             this.velocityY = 0.0;
             this.onTheGround = true;
         }
@@ -78,7 +87,6 @@ var Square = (function (_super) {
             this.positionY = 0;
             this.velocityY = 0.0;
         }
-        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
     };
     Square.prototype.startJump = function () {
         if (this.onTheGround) {
@@ -123,6 +131,28 @@ var Square = (function (_super) {
         }
     };
     return Square;
+}(GameObject));
+var Triangle = (function (_super) {
+    __extends(Triangle, _super);
+    function Triangle() {
+        var _this = _super.call(this) || this;
+        _this.width = 60;
+        _this.height = 6;
+        _this.element = document.createElement("triangle");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.element);
+        _this.positionX = window.innerWidth;
+        _this.positionY = 200;
+        return _this;
+    }
+    Triangle.prototype.update = function () {
+        this.positionX = this.positionX - 2;
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    Triangle.prototype.getBounds = function () {
+        return this.element.getBoundingClientRect();
+    };
+    return Triangle;
 }(GameObject));
 var Util = (function () {
     function Util() {
