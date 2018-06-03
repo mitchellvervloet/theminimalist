@@ -25,7 +25,7 @@ class Triangle extends GameObject {
 
         if ((this.positionX + this.width) < 0){
             this.reset()
-            Game.getInstance().score++
+            // Game.getInstance().score++
         }
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }

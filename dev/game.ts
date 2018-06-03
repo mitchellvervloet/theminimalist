@@ -8,12 +8,11 @@ class Game {
     public score: number = 0
 
     constructor() {
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new Powerup, new Powerup, new UI(this))
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new UI(this))
         this.square = new Square()
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
 
-        // this.scoreUp()
         this.gameLoop()
     }
 
@@ -27,13 +26,6 @@ class Game {
                 }
                 break
         }
-    }
-    public scoreUp() {
-        setInterval(() => {
-            if (!this.paused) {
-                this.score++
-            }
-        }, 1000)
     }
 
     //Check if there's already a game instance, if not create one. //SINGLETON DESIGN PATTERN
@@ -58,9 +50,10 @@ class Game {
                             this.lives--
                         }
                     }
-                    if (o instanceof Powerup) {
+                    if (o instanceof ScoreBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())){
                             o.reset()
+                            this.score++
                             console.log("caught power up!")
                         }
                     }
@@ -70,14 +63,6 @@ class Game {
                 console.log("game over")
             }
         }
-        // else {
-        //     for (let o of this.gameObjects) {
-        //         if (o instanceof UI) {
-        //             o.gamePause(this.paused)
-        //         }
-        //     }
-        // }
-
         requestAnimationFrame(() => this.gameLoop())
     }
 }

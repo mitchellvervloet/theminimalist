@@ -32,9 +32,13 @@ body * {
     user-select: none;
 }
 score {
+    font-family: 'Raleway', sans-serif;
     font-size: 3;
     width:530px;
-    text-shadow: 0px 4px 0px rgba(0,0,0,0.5);
+    position: absolute;
+    top: 10px;
+    left: 10px; 
+    font-weight: bold;
     transform: translate(20px, 20px);
 }
 paused {
@@ -50,7 +54,7 @@ square {
     z-index: 3;
     background-color: white;
     position: absolute;
-    box-shadow: 0 0 10px white;
+    /* box-shadow: 0 0 10px white; */
 }
 
 triangle {
@@ -61,7 +65,7 @@ triangle {
     border-top: 30px solid transparent;
     border-right: 50px solid red;
     border-bottom: 30px solid transparent;
-    box-shadow: 0 0 10px red;
+    /* box-shadow: 0 0 10px red; */
 }
 
 powerup {
@@ -71,5 +75,5 @@ powerup {
     position: absolute;
     background-color: yellow;
     border-radius: 50%;
-    box-shadow: 0 0 10px yellow;
+    /* box-shadow: 0 0 10px yellow; */
 }

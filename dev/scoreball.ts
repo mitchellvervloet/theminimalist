@@ -1,4 +1,4 @@
-class Powerup extends GameObject {
+class ScoreBall extends GameObject {
 
     public element: HTMLElement
     public width: number = 10
@@ -9,7 +9,7 @@ class Powerup extends GameObject {
 
     constructor() {
         super()
-        this.element = document.createElement("powerup")
+        this.element = document.createElement("scoreball")
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element);
 
