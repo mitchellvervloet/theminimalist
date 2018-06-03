@@ -7,6 +7,8 @@ class Game {
     public paused: boolean = false
     public score: number = 0
 
+    
+
     constructor() {
         this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new UI(this))
         this.square = new Square()

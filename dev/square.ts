@@ -1,4 +1,4 @@
-class Square  {
+class Square {
 
     private element: HTMLElement
     private speedLeft: number = 0
@@ -79,7 +79,7 @@ class Square  {
                 this.speedRight = 10
                 break
             case "ArrowUp":
-            //Only jump when square is on the ground
+                //Only jump when square is on the ground
                 if (this.onTheGround) {
                     this.startJump()
                 }
