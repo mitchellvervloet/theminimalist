@@ -16,10 +16,9 @@ var Game = (function () {
         this.lives = 3;
         this.paused = false;
         this.score = 0;
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new UI(this));
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new Powerup, new Powerup, new UI(this));
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
-        this.scoreUp();
         this.gameLoop();
     }
     Game.prototype.onKeyDown = function (event) {
@@ -62,19 +61,17 @@ var Game = (function () {
                             this.lives--;
                         }
                     }
+                    if (o instanceof Powerup) {
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                            o.reset();
+                            console.log("caught power up!");
+                        }
+                    }
                 }
             }
             else {
                 this.paused = true;
                 console.log("game over");
-            }
-        }
-        else {
-            for (var _b = 0, _c = this.gameObjects; _b < _c.length; _b++) {
-                var o = _c[_b];
-                if (o instanceof UI) {
-                    o.gamePause(this.paused);
-                }
             }
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -93,6 +90,36 @@ var GameObject = (function () {
     };
     return GameObject;
 }());
+var Powerup = (function (_super) {
+    __extends(Powerup, _super);
+    function Powerup() {
+        var _this = _super.call(this) || this;
+        _this.width = 10;
+        _this.height = 10;
+        _this.element = document.createElement("powerup");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.element);
+        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
+        _this.positionX = window.innerWidth;
+        _this.positionY = Math.random() * (window.innerHeight - _this.height);
+        return _this;
+    }
+    Powerup.prototype.update = function () {
+        this.positionX = this.positionX - this.speed;
+        if ((this.positionX + this.width) < 0) {
+            this.reset();
+        }
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    Powerup.prototype.getBounds = function () {
+        return this.element.getBoundingClientRect();
+    };
+    Powerup.prototype.reset = function () {
+        this.positionX = window.innerWidth;
+        this.positionY = Math.random() * (window.innerHeight - this.height);
+    };
+    return Powerup;
+}(GameObject));
 var Square = (function () {
     function Square() {
         var _this = this;
@@ -198,6 +225,7 @@ var Triangle = (function (_super) {
         this.positionX = this.positionX - this.speed;
         if ((this.positionX + this.width) < 0) {
             this.reset();
+            Game.getInstance().score++;
         }
         this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
     };

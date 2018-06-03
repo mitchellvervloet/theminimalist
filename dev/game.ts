@@ -8,12 +8,12 @@ class Game {
     public score: number = 0
 
     constructor() {
-        this.gameObjects.push(new Triangle,new Triangle,new Triangle, new UI(this))
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new Powerup, new Powerup, new UI(this))
         this.square = new Square()
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
 
-        this.scoreUp()
+        // this.scoreUp()
         this.gameLoop()
     }
 
@@ -29,7 +29,7 @@ class Game {
         }
     }
     public scoreUp() {
-        setInterval(()=> {
+        setInterval(() => {
             if (!this.paused) {
                 this.score++
             }
@@ -58,18 +58,25 @@ class Game {
                             this.lives--
                         }
                     }
+                    if (o instanceof Powerup) {
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())){
+                            o.reset()
+                            console.log("caught power up!")
+                        }
+                    }
                 }
             } else {
                 this.paused = true
                 console.log("game over")
             }
-        } else {
-            for (let o of this.gameObjects) {
-                if (o instanceof UI) {
-                    o.gamePause(this.paused)
-                }
-            }
         }
+        // else {
+        //     for (let o of this.gameObjects) {
+        //         if (o instanceof UI) {
+        //             o.gamePause(this.paused)
+        //         }
+        //     }
+        // }
 
         requestAnimationFrame(() => this.gameLoop())
     }

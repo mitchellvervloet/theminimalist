@@ -1,15 +1,15 @@
-class Triangle extends GameObject {
+class Powerup extends GameObject {
 
     public element: HTMLElement
-    public width: number = 50
-    public height: number = 50
+    public width: number = 10
+    public height: number = 10
     public speed: number
-    public positionX:number
-    public positionY:number
+    public positionX: number
+    public positionY: number
 
     constructor() {
         super()
-        this.element = document.createElement("triangle")
+        this.element = document.createElement("powerup")
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element);
 
@@ -18,14 +18,13 @@ class Triangle extends GameObject {
 
         this.positionX = window.innerWidth
         this.positionY = Math.random() * (window.innerHeight - this.height)
-    }
 
-    public update(): void {
+    }
+    update() {
         this.positionX = this.positionX - this.speed
 
-        if ((this.positionX + this.width) < 0){
+        if ((this.positionX + this.width) < 0) {
             this.reset()
-            Game.getInstance().score++
         }
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }
@@ -33,7 +32,7 @@ class Triangle extends GameObject {
         return this.element.getBoundingClientRect()
     }
 
-    public reset(){
+    public reset() {
         this.positionX = window.innerWidth
         this.positionY = Math.random() * (window.innerHeight - this.height)
     }
