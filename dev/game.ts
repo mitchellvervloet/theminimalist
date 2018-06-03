@@ -25,6 +25,8 @@ class Game {
                     this.paused = true
                 }
                 break
+            default:
+                break
         }
     }
 
@@ -36,7 +38,7 @@ class Game {
         return Game.instance
     }
 
-    //Game loop that runs 60fps, or as fast as the device can handle when it's less than 60
+    //Check if menu screen etc
     private gameLoop() {
         if (!this.paused) {
             if (this.lives > 0) {
@@ -51,7 +53,7 @@ class Game {
                         }
                     }
                     if (o instanceof ScoreBall) {
-                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())){
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset()
                             this.score++
                             console.log("caught power up!")

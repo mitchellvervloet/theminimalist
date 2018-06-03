@@ -31,6 +31,8 @@ var Game = (function () {
                     this.paused = true;
                 }
                 break;
+            default:
+                break;
         }
     };
     Game.getInstance = function () {
@@ -83,6 +85,13 @@ var GameObject = (function () {
     };
     return GameObject;
 }());
+var Menu = (function (_super) {
+    __extends(Menu, _super);
+    function Menu() {
+        return _super.call(this) || this;
+    }
+    return Menu;
+}(GameObject));
 var ScoreBall = (function (_super) {
     __extends(ScoreBall, _super);
     function ScoreBall() {

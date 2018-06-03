@@ -68,7 +68,7 @@ triangle {
     /* box-shadow: 0 0 10px red; */
 }
 
-powerup {
+scoreball {
     width: 10px;
     height: 10px;
     z-index: 1;
