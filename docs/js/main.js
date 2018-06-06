@@ -16,7 +16,7 @@ var Game = (function () {
         this.lives = 3;
         this.paused = false;
         this.score = 0;
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new UI(this));
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new Powerup, new UI(this));
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         this.gameLoop();
@@ -59,7 +59,13 @@ var Game = (function () {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset();
                             this.score++;
-                            console.log("caught power up!");
+                            console.log("caught scoreball!");
+                        }
+                    }
+                    if (o instanceof Powerup) {
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                            o.reset();
+                            console.log("caught powerup!");
                         }
                     }
                 }
@@ -80,6 +86,8 @@ var GameObject = (function () {
     function GameObject() {
         this.x = 0;
         this.y = 0;
+        this.width = 0;
+        this.height = 0;
     }
     GameObject.prototype.update = function () {
     };
@@ -91,6 +99,36 @@ var Menu = (function (_super) {
         return _super.call(this) || this;
     }
     return Menu;
+}(GameObject));
+var Powerup = (function (_super) {
+    __extends(Powerup, _super);
+    function Powerup() {
+        var _this = _super.call(this) || this;
+        _this.width = 10;
+        _this.height = 10;
+        _this.element = document.createElement("powerup");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.element);
+        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
+        _this.positionX = window.innerWidth;
+        _this.positionY = Math.random() * (window.innerHeight - _this.height);
+        return _this;
+    }
+    Powerup.prototype.update = function () {
+        this.positionX = this.positionX - this.speed;
+        if ((this.positionX + this.width) < 0) {
+            this.reset();
+        }
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    Powerup.prototype.getBounds = function () {
+        return this.element.getBoundingClientRect();
+    };
+    Powerup.prototype.reset = function () {
+        this.positionX = window.innerWidth;
+        this.positionY = Math.random() * (window.innerHeight - this.height);
+    };
+    return Powerup;
 }(GameObject));
 var ScoreBall = (function (_super) {
     __extends(ScoreBall, _super);

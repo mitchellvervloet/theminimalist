@@ -10,7 +10,7 @@ class Game {
     
 
     constructor() {
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new UI(this))
+        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new Powerup, new UI(this))
         this.square = new Square()
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
@@ -58,7 +58,14 @@ class Game {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset()
                             this.score++
-                            console.log("caught power up!")
+                            console.log("caught scoreball!")
+                        }
+                    }
+                    if (o instanceof Powerup) {
+                        if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                            o.reset()
+                            console.log("caught powerup!")
+                            
                         }
                     }
                 }

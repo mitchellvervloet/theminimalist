@@ -77,3 +77,12 @@ scoreball {
     border-radius: 50%;
     /* box-shadow: 0 0 10px yellow; */
 }
+powerup {
+    width: 10px;
+    height: 10px;
+    z-index: 1;
+    position: absolute;
+    background-color: blue;
+    border-radius: 50%;
+    /* box-shadow: 0 0 10px yellow; */
+}
