@@ -6,6 +6,7 @@ class Game {
     public lives: number = 3;
     public paused: boolean = false
     public score: number = 0
+    public pickedUpSlowDownPowerBall: boolean = false;
 
     constructor() {
         this.gameObjects.push(new Triangle, new ScoreBall, new ScoreBall, new UI(this))
@@ -45,7 +46,6 @@ class Game {
         if (!this.paused) {
             if (this.lives > 0) {
                 this.square.update()
-                console.log(this.gameObjects.length)
                 for (let o of this.gameObjects) {
                     o.update()
 
@@ -63,11 +63,13 @@ class Game {
                     }
                     if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                            // o.slowDown()
+                            o.pickedUpBySquare()
                             o.remove()
 
                             let i = this.gameObjects.indexOf(o)
                             this.gameObjects.splice(i, 1)
+
+                            this.pickedUpSlowDownPowerBall = true;
                         }
                     }
                 }

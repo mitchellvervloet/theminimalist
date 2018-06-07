@@ -28,7 +28,7 @@ class SlowDownPowerBall extends GameObject {
         }
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }
-
+    
     public remove() {
         this.element.remove()
     }

@@ -16,6 +16,7 @@ var Game = (function () {
         this.lives = 3;
         this.paused = false;
         this.score = 0;
+        this.pickedUpSlowDownPowerBall = false;
         this.gameObjects.push(new Triangle, new ScoreBall, new ScoreBall, new UI(this));
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
@@ -49,7 +50,6 @@ var Game = (function () {
         if (!this.paused) {
             if (this.lives > 0) {
                 this.square.update();
-                console.log(this.gameObjects.length);
                 for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
                     var o = _a[_i];
                     o.update();
@@ -67,9 +67,11 @@ var Game = (function () {
                     }
                     if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
+                            o.pickedUpBySquare();
                             o.remove();
                             var i = this.gameObjects.indexOf(o);
                             this.gameObjects.splice(i, 1);
+                            this.pickedUpSlowDownPowerBall = true;
                         }
                     }
                 }
