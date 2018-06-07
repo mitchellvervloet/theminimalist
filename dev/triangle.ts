@@ -3,9 +3,10 @@ class Triangle extends GameObject {
     public element: HTMLElement
     public width: number = 50
     public height: number = 50
-    public speed: number
     public positionX:number
     public positionY:number
+    public speed: number
+    public behaviour: Behaviour
 
     constructor() {
         super()
@@ -13,14 +14,15 @@ class Triangle extends GameObject {
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element);
 
-        //Random speed between 3 and 10?
-        this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
+        this.behaviour = new Normal(this);
 
         this.positionX = window.innerWidth
         this.positionY = Math.random() * (window.innerHeight - this.height)
     }
 
     public update(): void {
+        this.behaviour.performBehaviour()
+
         this.positionX = this.positionX - this.speed
 
         if ((this.positionX + this.width) < 0){

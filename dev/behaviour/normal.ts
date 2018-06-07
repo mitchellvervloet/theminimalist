@@ -1,18 +1,17 @@
-class SpeedUp implements Behaviour {  
+class Normal implements Behaviour {
     triangle: Triangle;
 
     constructor(triangle: Triangle) {
         this.triangle = triangle
     }
     performBehaviour(): void {
-        this.onSpeedUp()
+        this.onNormal()
     }
     onSpeedUp(): void {
-        console.log("speeding up")
     }
     onSpeedDown(): void {
     }
     onNormal(): void {
+        this.triangle.speed = 5;
     }
-
 }

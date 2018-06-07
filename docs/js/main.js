@@ -59,13 +59,11 @@ var Game = (function () {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset();
                             this.score++;
-                            console.log("caught scoreball!");
                         }
                     }
                     if (o instanceof Powerup) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset();
-                            console.log("caught powerup!");
                         }
                     }
                 }
@@ -256,12 +254,13 @@ var Triangle = (function (_super) {
         _this.element = document.createElement("triangle");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(_this.element);
-        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
+        _this.behaviour = new Normal(_this);
         _this.positionX = window.innerWidth;
         _this.positionY = Math.random() * (window.innerHeight - _this.height);
         return _this;
     }
     Triangle.prototype.update = function () {
+        this.behaviour.performBehaviour();
         this.positionX = this.positionX - this.speed;
         if ((this.positionX + this.width) < 0) {
             this.reset();
@@ -314,34 +313,52 @@ var Util = (function () {
     };
     return Util;
 }());
-var slowDown = (function () {
-    function slowDown(square) {
-        this.square = square;
+var Normal = (function () {
+    function Normal(triangle) {
+        this.triangle = triangle;
     }
-    slowDown.prototype.performBehaviour = function () {
-        this.onSlowDown();
+    Normal.prototype.performBehaviour = function () {
+        this.onNormal();
     };
-    slowDown.prototype.onSpeedUp = function () {
-        console.log("Not in this behaviour");
+    Normal.prototype.onSpeedUp = function () {
     };
-    slowDown.prototype.onSlowDown = function () {
-        console.log("Slow down");
+    Normal.prototype.onSpeedDown = function () {
     };
-    return slowDown;
+    Normal.prototype.onNormal = function () {
+        this.triangle.speed = 5;
+    };
+    return Normal;
 }());
-var speedUp = (function () {
-    function speedUp(square) {
-        this.square = square;
+var SpeedDown = (function () {
+    function SpeedDown(triangle) {
+        this.triangle = triangle;
     }
-    speedUp.prototype.performBehaviour = function () {
+    SpeedDown.prototype.performBehaviour = function () {
+        this.onSpeedDown();
+    };
+    SpeedDown.prototype.onSpeedUp = function () {
+    };
+    SpeedDown.prototype.onSpeedDown = function () {
+        console.log("speeding DOWN");
+    };
+    SpeedDown.prototype.onNormal = function () {
+    };
+    return SpeedDown;
+}());
+var SpeedUp = (function () {
+    function SpeedUp(triangle) {
+        this.triangle = triangle;
+    }
+    SpeedUp.prototype.performBehaviour = function () {
         this.onSpeedUp();
     };
-    speedUp.prototype.onSpeedUp = function () {
-        console.log("Speed up");
+    SpeedUp.prototype.onSpeedUp = function () {
+        console.log("speeding up");
     };
-    speedUp.prototype.onSlowDown = function () {
-        console.log("Not in this behaviour");
+    SpeedUp.prototype.onSpeedDown = function () {
     };
-    return speedUp;
+    SpeedUp.prototype.onNormal = function () {
+    };
+    return SpeedUp;
 }());
 //# sourceMappingURL=main.js.map

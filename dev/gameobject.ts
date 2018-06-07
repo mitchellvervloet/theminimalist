@@ -10,7 +10,6 @@ class GameObject {
     }
 
     public update(): void {
-        // console.log("Draw the objects here and transform")
     }
 
 }   
