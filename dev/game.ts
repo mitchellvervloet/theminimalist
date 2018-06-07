@@ -8,11 +8,13 @@ class Game {
     public score: number = 0
 
     constructor() {
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new Powerup, new UI(this))
+        this.gameObjects.push(new Triangle, new ScoreBall, new ScoreBall, new UI(this))
         this.square = new Square()
 
         window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
-
+        setTimeout(() => { this.gameObjects.push(new Triangle) }, 10000);
+        setTimeout(() => { this.gameObjects.push(new Triangle) }, 20000);
+        setTimeout(() => { this.gameObjects.push(new SlowDownPowerBall) }, 1000);
         this.gameLoop()
     }
 
@@ -43,6 +45,7 @@ class Game {
         if (!this.paused) {
             if (this.lives > 0) {
                 this.square.update()
+                console.log(this.gameObjects.length)
                 for (let o of this.gameObjects) {
                     o.update()
 
@@ -58,10 +61,13 @@ class Game {
                             this.score++
                         }
                     }
-                    if (o instanceof Powerup) {
+                    if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                            o.reset()
-                            
+                            // o.slowDown()
+                            o.remove()
+
+                            let i = this.gameObjects.indexOf(o)
+                            this.gameObjects.splice(i, 1)
                         }
                     }
                 }

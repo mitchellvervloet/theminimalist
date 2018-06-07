@@ -9,6 +9,7 @@ class SpeedUp implements Behaviour {
     }
     onSpeedUp(): void {
         console.log("speeding up")
+        this.triangle.speed = this.triangle.speed + 0.01
     }
     onSpeedDown(): void {
     }

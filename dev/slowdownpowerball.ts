@@ -1,4 +1,4 @@
-class Powerup extends GameObject {
+class SlowDownPowerBall extends GameObject {
 
     public element: HTMLElement
     public width: number = 10
@@ -28,6 +28,11 @@ class Powerup extends GameObject {
         }
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }
+
+    public remove() {
+        this.element.remove()
+    }
+
     public getBounds() {
         return this.element.getBoundingClientRect()
     }

@@ -16,9 +16,12 @@ var Game = (function () {
         this.lives = 3;
         this.paused = false;
         this.score = 0;
-        this.gameObjects.push(new Triangle, new Triangle, new Triangle, new ScoreBall, new ScoreBall, new Powerup, new UI(this));
+        this.gameObjects.push(new Triangle, new ScoreBall, new ScoreBall, new UI(this));
         this.square = new Square();
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+        setTimeout(function () { _this.gameObjects.push(new Triangle); }, 10000);
+        setTimeout(function () { _this.gameObjects.push(new Triangle); }, 20000);
+        setTimeout(function () { _this.gameObjects.push(new SlowDownPowerBall); }, 1000);
         this.gameLoop();
     }
     Game.prototype.onKeyDown = function (event) {
@@ -46,6 +49,7 @@ var Game = (function () {
         if (!this.paused) {
             if (this.lives > 0) {
                 this.square.update();
+                console.log(this.gameObjects.length);
                 for (var _i = 0, _a = this.gameObjects; _i < _a.length; _i++) {
                     var o = _a[_i];
                     o.update();
@@ -61,9 +65,11 @@ var Game = (function () {
                             this.score++;
                         }
                     }
-                    if (o instanceof Powerup) {
+                    if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                            o.reset();
+                            o.remove();
+                            var i = this.gameObjects.indexOf(o);
+                            this.gameObjects.splice(i, 1);
                         }
                     }
                 }
@@ -98,36 +104,6 @@ var Menu = (function (_super) {
     }
     return Menu;
 }(GameObject));
-var Powerup = (function (_super) {
-    __extends(Powerup, _super);
-    function Powerup() {
-        var _this = _super.call(this) || this;
-        _this.width = 10;
-        _this.height = 10;
-        _this.element = document.createElement("powerup");
-        var foreground = document.getElementsByTagName("foreground")[0];
-        foreground.appendChild(_this.element);
-        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
-        _this.positionX = window.innerWidth;
-        _this.positionY = Math.random() * (window.innerHeight - _this.height);
-        return _this;
-    }
-    Powerup.prototype.update = function () {
-        this.positionX = this.positionX - this.speed;
-        if ((this.positionX + this.width) < 0) {
-            this.reset();
-        }
-        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
-    };
-    Powerup.prototype.getBounds = function () {
-        return this.element.getBoundingClientRect();
-    };
-    Powerup.prototype.reset = function () {
-        this.positionX = window.innerWidth;
-        this.positionY = Math.random() * (window.innerHeight - this.height);
-    };
-    return Powerup;
-}(GameObject));
 var ScoreBall = (function (_super) {
     __extends(ScoreBall, _super);
     function ScoreBall() {
@@ -157,6 +133,39 @@ var ScoreBall = (function (_super) {
         this.positionY = Math.random() * (window.innerHeight - this.height);
     };
     return ScoreBall;
+}(GameObject));
+var SlowDownPowerBall = (function (_super) {
+    __extends(SlowDownPowerBall, _super);
+    function SlowDownPowerBall() {
+        var _this = _super.call(this) || this;
+        _this.width = 10;
+        _this.height = 10;
+        _this.element = document.createElement("powerup");
+        var foreground = document.getElementsByTagName("foreground")[0];
+        foreground.appendChild(_this.element);
+        _this.speed = Math.floor(Math.random() * (10 - 3 + 1)) + 10;
+        _this.positionX = window.innerWidth;
+        _this.positionY = Math.random() * (window.innerHeight - _this.height);
+        return _this;
+    }
+    SlowDownPowerBall.prototype.update = function () {
+        this.positionX = this.positionX - this.speed;
+        if ((this.positionX + this.width) < 0) {
+            this.reset();
+        }
+        this.element.style.transform = "translate(" + this.positionX + "px, " + this.positionY + "px)";
+    };
+    SlowDownPowerBall.prototype.remove = function () {
+        this.element.remove();
+    };
+    SlowDownPowerBall.prototype.getBounds = function () {
+        return this.element.getBoundingClientRect();
+    };
+    SlowDownPowerBall.prototype.reset = function () {
+        this.positionX = window.innerWidth;
+        this.positionY = Math.random() * (window.innerHeight - this.height);
+    };
+    return SlowDownPowerBall;
 }(GameObject));
 var Square = (function () {
     function Square() {
@@ -318,7 +327,9 @@ var Normal = (function () {
         this.triangle = triangle;
     }
     Normal.prototype.performBehaviour = function () {
+        var _this = this;
         this.onNormal();
+        setTimeout(function () { _this.triangle.behaviour = new SpeedUp(_this.triangle); }, 5000);
     };
     Normal.prototype.onSpeedUp = function () {
     };
@@ -354,6 +365,7 @@ var SpeedUp = (function () {
     };
     SpeedUp.prototype.onSpeedUp = function () {
         console.log("speeding up");
+        this.triangle.speed = this.triangle.speed + 0.01;
     };
     SpeedUp.prototype.onSpeedDown = function () {
     };
