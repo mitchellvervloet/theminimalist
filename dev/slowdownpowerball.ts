@@ -20,7 +20,7 @@ class SlowDownPowerBall extends GameObject {
         this.positionY = Math.random() * (window.innerHeight - this.height)
 
     }
-    update() {
+    public update() {
         this.positionX = this.positionX - this.speed
 
         if ((this.positionX + this.width) < 0) {
@@ -28,7 +28,7 @@ class SlowDownPowerBall extends GameObject {
         }
         this.element.style.transform = `translate(${this.positionX}px, ${this.positionY}px)`
     }
-    
+
     public remove() {
         this.element.remove()
     }

@@ -50,6 +50,9 @@ class Game {
                     o.update()
 
                     if (o instanceof Triangle) {
+                        if (this.pickedUpSlowDownPowerBall) {
+                            o.behaviour = new SpeedDown(o)
+                        }
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset()
                             this.lives--
@@ -63,7 +66,6 @@ class Game {
                     }
                     if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                            o.pickedUpBySquare()
                             o.remove()
 
                             let i = this.gameObjects.indexOf(o)

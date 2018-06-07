@@ -1,4 +1,4 @@
-class SpeedUp implements Behaviour {  
+class SpeedUp implements Behaviour {
     triangle: Triangle;
 
     constructor(triangle: Triangle) {
@@ -8,8 +8,11 @@ class SpeedUp implements Behaviour {
         this.onSpeedUp()
     }
     onSpeedUp(): void {
-        console.log("speeding up")
-        this.triangle.speed = this.triangle.speed + 0.01
+        if (this.triangle.speed < 15) {
+            this.triangle.speed = this.triangle.speed + 0.02
+        } else {
+            this.triangle.speed = 15
+        }
     }
     onSpeedDown(): void {
     }

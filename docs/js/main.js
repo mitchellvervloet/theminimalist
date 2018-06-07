@@ -54,6 +54,9 @@ var Game = (function () {
                     var o = _a[_i];
                     o.update();
                     if (o instanceof Triangle) {
+                        if (this.pickedUpSlowDownPowerBall) {
+                            o.behaviour = new SpeedDown(o);
+                        }
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
                             o.reset();
                             this.lives--;
@@ -67,7 +70,6 @@ var Game = (function () {
                     }
                     if (o instanceof SlowDownPowerBall) {
                         if (Util.checkCollision(this.square.getBounds(), o.getBounds())) {
-                            o.pickedUpBySquare();
                             o.remove();
                             var i = this.gameObjects.indexOf(o);
                             this.gameObjects.splice(i, 1);
@@ -329,16 +331,15 @@ var Normal = (function () {
         this.triangle = triangle;
     }
     Normal.prototype.performBehaviour = function () {
-        var _this = this;
         this.onNormal();
-        setTimeout(function () { _this.triangle.behaviour = new SpeedUp(_this.triangle); }, 5000);
+        console.log(this.triangle.speed);
     };
     Normal.prototype.onSpeedUp = function () {
     };
     Normal.prototype.onSpeedDown = function () {
     };
     Normal.prototype.onNormal = function () {
-        this.triangle.speed = 5;
+        this.triangle.speed = 10;
     };
     return Normal;
 }());
@@ -352,7 +353,13 @@ var SpeedDown = (function () {
     SpeedDown.prototype.onSpeedUp = function () {
     };
     SpeedDown.prototype.onSpeedDown = function () {
-        console.log("speeding DOWN");
+        console.log(this.triangle.speed);
+        if (this.triangle.speed < 5) {
+            this.triangle.speed = 5;
+        }
+        else {
+            this.triangle.speed = this.triangle.speed - 0.005;
+        }
     };
     SpeedDown.prototype.onNormal = function () {
     };
@@ -366,8 +373,12 @@ var SpeedUp = (function () {
         this.onSpeedUp();
     };
     SpeedUp.prototype.onSpeedUp = function () {
-        console.log("speeding up");
-        this.triangle.speed = this.triangle.speed + 0.01;
+        if (this.triangle.speed < 15) {
+            this.triangle.speed = this.triangle.speed + 0.02;
+        }
+        else {
+            this.triangle.speed = 15;
+        }
     };
     SpeedUp.prototype.onSpeedDown = function () {
     };
