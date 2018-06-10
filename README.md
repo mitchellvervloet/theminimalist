@@ -24,7 +24,7 @@
 - Singleton van Game: Zodat er maar 1 Game instance is.
 
 ## Peer review
-- link naar peer review in week 6
+- Link naar peer review: https://github.com/mitchellvervloet/DrugDealer/issues/2
 
 ## Singleton
 - ..
