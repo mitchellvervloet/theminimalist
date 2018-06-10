@@ -1,6 +1,7 @@
-interface Behaviour { //STRATEGY PATTERN
-    square:Square
+interface Behaviour {
+    triangle:Triangle
     performBehaviour():void
     onSpeedUp(): void
-    onSlowDown(): void
+    onSpeedDown(): void
+    onNormal():void
 }
